@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqs-consumer
+  namespace: sqs-consumer
+  labels:
+    app: sqs-consumer
+    version: v1.0.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqs-consumer
+  template:
+    metadata:
+      labels:
+        app: sqs-consumer
+        version: v1.0.0
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.carbyne_backend_image.image }}
+          imagePullPolicy: {{ .Values.carbyne_backend_image.pullPolicy }}
+          ports: {{- toYaml .Values.carbyne_backend_image.ports | nindent 12 }}
+          env: {{- toYaml .Values.carbyne_backend_image.env | nindent 12 }}
+          resources:
+            requests:
+              cpu: {{ .Values.carbyne_backend_image.cpu }}
+              memory: {{ .Values.carbyne_backend_image.memory }}

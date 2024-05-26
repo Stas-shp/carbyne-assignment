@@ -1,0 +1,14 @@
+replicaCount: 1
+
+carbyne_backend_image:
+  image: nginx
+  pullPolicy: Always
+  cpu: 500m
+  memory: 512Mi
+  ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+
+queue_url: ${sql_queue_url}
+aws_region: ${aws_region}
